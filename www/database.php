@@ -1,5 +1,4 @@
 <?php
-// PDO database connectie (zoals in Hoofdstuk 1)
 $dbhost = 'mariadb';
 $dbname = 'RecipeBox';
 $dbuser = 'root';

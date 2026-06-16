@@ -2,7 +2,6 @@
 session_start();
 require 'database.php';
 
-// Alleen ingelogde gebruikers
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -23,7 +22,6 @@ $foto_url        = trim($_POST['foto_url'] ?? '');
 $category_id     = $_POST['category_id'] ?? '';
 $user_id         = (int) $_SESSION['user_id'];
 
-// Input validatie: verplichte velden
 if ($titel == '' || $ingredienten == '' || $bereidingswijze == ''
     || !is_numeric($bereidingstijd) || !is_numeric($porties) || !is_numeric($category_id)) {
     header('Location: recipe_create.php?error=' . urlencode('Vul alle verplichte velden correct in.'));
@@ -35,7 +33,6 @@ $porties        = (int) $porties;
 $category_id    = (int) $category_id;
 $foto_url       = $foto_url == '' ? null : $foto_url;
 
-// Prepared statement INSERT
 $stmt = $conn->prepare('INSERT INTO recipes
         (titel, omschrijving, bereidingstijd, porties, ingredienten, bereidingswijze, foto_url, category_id, user_id)
         VALUES (:titel, :omschrijving, :bereidingstijd, :porties, :ingredienten, :bereidingswijze, :foto_url, :category_id, :user_id)');
@@ -51,7 +48,6 @@ $stmt->execute([
     'user_id'         => $user_id
 ]);
 
-// Id van het nieuwe recept ophalen
 $nieuw_id = $conn->lastInsertId();
 
 header('Location: recipe_detail.php?id=' . $nieuw_id);

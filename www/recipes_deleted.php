@@ -2,7 +2,6 @@
 session_start();
 require 'database.php';
 
-// Alleen admins hebben toegang tot deze pagina
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') != 'admin') {
     http_response_code(403);
     include 'header.php';
@@ -11,7 +10,6 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') != 'admin') {
     exit;
 }
 
-// Herstellen: zet deleted_at terug naar NULL
 if (isset($_GET['restore']) && is_numeric($_GET['restore'])) {
     $restore_id = (int) $_GET['restore'];
     $stmt = $conn->prepare('UPDATE recipes SET deleted_at = NULL WHERE id = :id');
@@ -20,7 +18,6 @@ if (isset($_GET['restore']) && is_numeric($_GET['restore'])) {
     exit;
 }
 
-// Alle soft-deleted recepten
 $sql = 'SELECT recipes.*, categories.naam AS categorie_naam
         FROM recipes
         JOIN categories ON recipes.category_id = categories.id

@@ -7,7 +7,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// recipe_id moet numeriek zijn
 $id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int) $_GET['id'] : 0;
 
 $stmt = $conn->prepare('SELECT * FROM recipes WHERE id = :id AND deleted_at IS NULL');
@@ -22,7 +21,6 @@ if (!$recipe) {
     exit;
 }
 
-// Alleen de eigenaar of een admin mag wijzigen
 $is_admin    = ($_SESSION['role'] ?? '') == 'admin';
 $is_eigenaar = (int) $_SESSION['user_id'] === (int) $recipe['user_id'];
 if (!$is_admin && !$is_eigenaar) {

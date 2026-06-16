@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Al ingelogd? Door naar het overzicht.
 if (isset($_SESSION['user_id'])) {
     header('Location: recipes_index.php');
     exit;

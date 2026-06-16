@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Het receptenoverzicht is openbaar: bezoekers hoeven niet ingelogd te zijn.
 require 'database.php';
 
 $sql = 'SELECT recipes.*, categories.naam AS categorie_naam

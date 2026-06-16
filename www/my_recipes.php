@@ -2,13 +2,11 @@
 session_start();
 require 'database.php';
 
-// Alleen ingelogde gebruikers
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Eigen recepten van de ingelogde gebruiker
 $stmt = $conn->prepare('SELECT recipes.*, categories.naam AS categorie_naam
                         FROM recipes
                         JOIN categories ON recipes.category_id = categories.id

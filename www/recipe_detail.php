@@ -24,7 +24,6 @@ $ingelogd = isset($_SESSION['user_id']);
 $is_admin = ($_SESSION['role'] ?? '') == 'admin';
 $is_eigenaar = $ingelogd && (int) $_SESSION['user_id'] === (int) $recipe['user_id'];
 
-// Staat dit recept al in de favorieten van de ingelogde gebruiker?
 $al_favoriet = false;
 if ($ingelogd) {
     $stmt = $conn->prepare('SELECT id FROM favorites WHERE user_id = :user_id AND recipe_id = :recipe_id');

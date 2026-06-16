@@ -2,25 +2,21 @@
 session_start();
 require 'database.php';
 
-// --- Filters uit GET parameters ---
 $category_id = isset($_GET['category_id']) && is_numeric($_GET['category_id']) ? (int) $_GET['category_id'] : null;
 $tijd        = $_GET['tijd'] ?? '';
 $search      = trim($_GET['search'] ?? '');
 
-// We bouwen de query stap voor stap op en verzamelen de parameters
 $sql = 'SELECT recipes.*, categories.naam AS categorie_naam
         FROM recipes
         JOIN categories ON recipes.category_id = categories.id
         WHERE recipes.deleted_at IS NULL';
 $params = [];
 
-// Filter op categorie
 if ($category_id !== null) {
     $sql .= ' AND recipes.category_id = :category_id';
     $params['category_id'] = $category_id;
 }
 
-// Filter op bereidingstijd: snel (<=30), normaal (31-60), uitgebreid (>60)
 if ($tijd === 'snel') {
     $sql .= ' AND recipes.bereidingstijd <= 30';
 } elseif ($tijd === 'normaal') {
@@ -29,7 +25,6 @@ if ($tijd === 'snel') {
     $sql .= ' AND recipes.bereidingstijd > 60';
 }
 
-// Zoeken op titel met LIKE
 if ($search !== '') {
     $sql .= ' AND recipes.titel LIKE :search';
     $params['search'] = '%' . $search . '%';
@@ -41,12 +36,10 @@ $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Categorieën voor de filter-balk
 $stmt = $conn->prepare('SELECT id, naam FROM categories ORDER BY naam');
 $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Naam van actieve categorie voor de titel
 $actieve_categorie = null;
 if ($category_id !== null) {
     foreach ($categories as $c) {

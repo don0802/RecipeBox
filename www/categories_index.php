@@ -2,7 +2,6 @@
 session_start();
 require 'database.php';
 
-// Aantal (niet-verwijderde) recepten per categorie tonen
 $sql = 'SELECT categories.id, categories.naam, categories.omschrijving, categories.foto_url,
                COUNT(recipes.id) AS aantal
         FROM categories

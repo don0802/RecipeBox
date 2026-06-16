@@ -2,13 +2,11 @@
 session_start();
 require 'database.php';
 
-// Alleen ingelogde gebruikers mogen recepten toevoegen
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Categorieën voor de dropdown
 $stmt = $conn->prepare('SELECT id, naam FROM categories ORDER BY naam');
 $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -2,13 +2,11 @@
 session_start();
 require 'database.php';
 
-// Alleen ingelogde gebruikers
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Verwijderen uit favorieten
 if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
     $remove_id = (int) $_GET['remove'];
     $stmt = $conn->prepare('DELETE FROM favorites WHERE user_id = :user_id AND recipe_id = :recipe_id');
@@ -17,7 +15,6 @@ if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
     exit;
 }
 
-// Favoriete recepten van de ingelogde gebruiker (JOIN via favorites)
 $stmt = $conn->prepare('SELECT recipes.*, categories.naam AS categorie_naam
                         FROM favorites
                         JOIN recipes ON favorites.recipe_id = recipes.id
