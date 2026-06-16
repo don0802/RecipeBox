@@ -24,3 +24,4 @@
         <p>&copy; <?php echo date('Y'); ?> RecipeBox</p>
     </div>
 </footer>
+<script src="script.js"></script>

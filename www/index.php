@@ -1,16 +1,22 @@
 <?php
 session_start();
+
+// Het receptenoverzicht is openbaar: bezoekers hoeven niet ingelogd te zijn.
 require 'database.php';
 
-$sql = 'SELECT recipes.*, categories.naam AS categorie_naam FROM recipes JOIN categories ON recipes.category_id = categories.id WHERE recipes.deleted_at IS NULL';
+$sql = 'SELECT recipes.*, categories.naam AS categorie_naam
+        FROM recipes
+        JOIN categories ON recipes.category_id = categories.id
+        WHERE recipes.deleted_at IS NULL
+        ORDER BY recipes.created_at DESC';
 
-$result = mysqli_query($conn, $sql);
-
-$recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

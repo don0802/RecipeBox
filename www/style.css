@@ -1,3 +1,20 @@
+/* ---------- Kleurenpalet (warm, passend bij eten) ---------- */
+:root {
+  --primary: #e07b39;        /* hoofdkleur oranje */
+  --primary-dark: #c96a2a;   /* oranje hover */
+  --accent: #5a9e63;         /* groen accent (vers/kruiden) */
+  --accent-dark: #4a8553;
+  --bg: #f0e2d2;             /* warme zandkleur achtergrond */
+  --surface: #fff8f0;        /* warme crème i.p.v. wit (kaarten/header) */
+  --text: #2c2420;           /* warm donkerbruin i.p.v. zwart */
+  --muted: #8a7f78;          /* gedempte tekst */
+  --border: #ecdfd6;         /* zachte rand */
+  --info: #3b82a0;           /* blauw (wijzigen) */
+  --info-dark: #2f6a83;
+  --danger: #c0392b;         /* rood (verwijderen) */
+  --danger-dark: #a13225;
+}
+
 * {
   text-decoration: none;
 }
@@ -6,6 +23,13 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
 main {
@@ -17,21 +41,36 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 16px 32px;
-  background-color: #fff;
+  background-color: var(--surface);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-bottom: 3px solid var(--primary);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 header h1 a {
-  color: #e07b39;
+  color: var(--primary);
   font-size: 1.6rem;
   font-weight: bold;
 }
 
 .h2-hero {
-    text-align: center;
+  text-align: center;
+  color: var(--text);
+  position: relative;
+  padding-bottom: 12px;
+}
+
+/* Oranje streepje onder de paginatitel */
+.h2-hero::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--primary);
+  border-radius: 2px;
+  margin: 10px auto 0;
 }
 
 nav {
@@ -54,7 +93,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #e07b39;
+  color: var(--primary);
 }
 
 .recipes-grid {
@@ -67,12 +106,19 @@ nav a:hover {
 }
 
 .recipe-card {
-  background-color: #fff;
+  background-color: var(--surface);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border-top: 4px solid var(--primary);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(224, 123, 57, 0.18);
 }
 
 .recipe-card img {
@@ -84,7 +130,7 @@ nav a:hover {
 .recipe-card h3 {
   font-size: 1.1rem;
   padding: 12px 16px 4px;
-  color: #222;
+  color: var(--text);
 }
 
 .recipe-card p {
@@ -95,7 +141,7 @@ nav a:hover {
 
 .recipe-card span {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--muted);
   padding: 2px 16px;
 }
 
@@ -103,7 +149,7 @@ nav a:hover {
   display: inline-block;
   margin: 12px 16px 16px;
   padding: 8px 16px;
-  background-color: #e07b39;
+  background-color: var(--primary);
   color: #fff;
   border-radius: 6px;
   font-size: 0.9rem;
@@ -111,11 +157,12 @@ nav a:hover {
 }
 
 .recipe-card a:hover {
-  background-color: #c96a2a;
+  background-color: var(--primary-dark);
 }
 
 .site-footer {
-  background-color: #f5f5f5;
+  background-color: #34281f;
+  color: #e8ddd3;
   padding: 40px 20px 20px;
   margin-top: 60px;
 }
@@ -124,13 +171,13 @@ nav a:hover {
   display: flex;
   justify-content: space-around;
   padding-bottom: 30px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .footer-brand a {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #e07b39;
+  color: var(--primary);
 }
 
 .footer-links ul {
@@ -139,7 +186,7 @@ nav a:hover {
 }
 
 .footer-links a {
-  color: #444;
+  color: #d8cbbf;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -147,13 +194,13 @@ nav a:hover {
 }
 
 .footer-links a:hover {
-  color: #e07b39;
+  color: var(--primary);
 }
 
 .footer-bottom {
   text-align: center;
   padding-top: 20px;
-  color: #888;
+  color: #b3a496;
   font-size: 0.85rem;
 }
 
@@ -185,4 +232,288 @@ nav a:hover {
     flex-direction: column;
     gap: 24px;
   }
+}
+
+/* ---------- Formulieren (login, register, recept) ---------- */
+.auth-card,
+.form-card {
+  background-color: var(--surface);
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 28px 32px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid var(--primary);
+}
+
+.form-card {
+  max-width: 640px;
+}
+
+.auth-card h2,
+.form-card h2 {
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.auth-card label,
+.form-card label {
+  display: block;
+  margin: 12px 0 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.auth-card input,
+.auth-card select,
+.auth-card textarea,
+.form-card input,
+.form-card select,
+.form-card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.auth-card input:focus,
+.auth-card select:focus,
+.auth-card textarea:focus,
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(224, 123, 57, 0.15);
+}
+
+.auth-card button,
+.form-card button {
+  margin-top: 18px;
+  width: 100%;
+  padding: 11px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.auth-card button:hover,
+.form-card button:hover {
+  background-color: var(--primary-dark);
+}
+
+.auth-switch {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #666;
+}
+
+.auth-switch a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.form-error {
+  background-color: #fdecea;
+  color: #b3261e;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  border-left: 4px solid var(--danger);
+}
+
+.form-success {
+  background-color: #e7f4e8;
+  color: #1e7b34;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: center;
+  border-left: 4px solid var(--accent);
+}
+
+/* ---------- Filterbalk ---------- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  max-width: 1000px;
+  margin: 16px auto;
+  background-color: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.filter-bar button {
+  padding: 9px 18px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.filter-bar button:hover {
+  background-color: var(--primary-dark);
+}
+
+.filter-reset {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 16px;
+}
+
+/* ---------- Recept detail ---------- */
+.recipe-detail {
+  background-color: var(--surface);
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 28px 32px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid var(--primary);
+}
+
+.detail-foto {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.detail-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.detail-omschrijving {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.recipe-detail h3 {
+  margin: 18px 0 6px;
+  color: var(--primary);
+}
+
+.detail-tekst {
+  color: #333;
+  line-height: 1.6;
+}
+
+.fav-btn {
+  margin-top: 22px;
+  padding: 10px 20px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.fav-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+.fav-btn:disabled {
+  background-color: var(--accent);
+  cursor: default;
+}
+
+.fav-melding {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.detail-acties {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+}
+
+/* ---------- Knoppen in kaarten / tabel ---------- */
+.btn-edit,
+.btn-delete {
+  display: inline-block;
+  margin: 12px 16px 16px 0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #fff !important;
+}
+
+.btn-edit {
+  background-color: var(--info);
+}
+
+.btn-edit:hover {
+  background-color: var(--info-dark);
+}
+
+.btn-delete {
+  background-color: var(--danger);
+}
+
+.btn-delete:hover {
+  background-color: var(--danger-dark);
+}
+
+/* ---------- Tabel (verwijderde recepten) ---------- */
+.data-table {
+  width: 90%;
+  max-width: 900px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: var(--surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+  background-color: var(--primary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.data-table tr:hover td {
+  background-color: #fdf2ea;
 }
